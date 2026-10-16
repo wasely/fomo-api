@@ -1,6 +1,12 @@
-# fomo-api — Solana wallet watchlist for Fomo users
+# fomo-api
 
-Get native SOL balances for a small list of public Solana wallets in one command. Use addresses you already know to create a JSON balance snapshot.
+**Inspect a Solana wallet watchlist in one command.**
+
+![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white) ![Dependencies: standard library](https://img.shields.io/badge/dependencies-standard_library-334155?style=flat-square) ![Mode: read only](https://img.shields.io/badge/mode-read_only-0F766E?style=flat-square)
+
+A small, read-only companion for Fomo users who want exact native SOL balances for public wallet addresses they already know.
+
+[Quick start](#quick-start) · [Examples](docs/examples.md) · [Python usage](#use-from-python) · [FAQ](#frequently-asked-questions)
 
 Independent, unofficial companion tool. This is **not a Fomo platform API client**. It does not access Fomo profiles, social feeds, leaderboards, private accounts, or trading endpoints. It calls Solana JSON-RPC directly. Not affiliated with Fomo Labs.
 
@@ -15,6 +21,33 @@ python watchlist.py 11111111111111111111111111111111
 ```
 
 The included addresses are public program/mint examples, not personal wallets. Replace them with the addresses you want to inspect.
+
+## At a glance
+
+| Task | Command |
+| --- | --- |
+| Inspect one wallet | `python watchlist.py ADDRESS` |
+| Inspect several wallets | `python watchlist.py ADDRESS_1 ADDRESS_2` |
+| Import into a script | `from watchlist import snapshot` |
+
+Replace uppercase placeholders with actual addresses or signatures.
+
+## Example output
+
+Example devnet response. Your cluster, addresses, balances, and slots will differ.
+
+```json
+{
+  "wallets": [
+    {
+      "address": "11111111111111111111111111111111",
+      "slot": 511592631,
+      "lamports": 1,
+      "sol": "0.000000001"
+    }
+  ]
+}
+```
 
 ## What it does
 
@@ -68,6 +101,30 @@ python -m unittest discover -v
 ```
 
 Ten offline tests cover the tool's behavior, address validation, exact balance formatting, malformed JSON-RPC responses, and HTTP/network errors. Live read-only examples were also checked against Solana devnet on 2026-10-15. Live results change and are not part of the offline test suite.
+
+## Frequently asked questions
+
+### Is this an official Fomo API or SDK?
+
+No. It is an independent Solana wallet tool, not a client for Fomo's platform or social data.
+
+### Can I look up a Fomo username?
+
+No. Supply a public Solana address you already know. The tool does not map usernames to wallets.
+
+### Does this include SPL tokens or other chains?
+
+No. It reads native SOL only. Wrapped SOL, token holdings, fiat prices, and other chains are outside its scope.
+
+## Related tools
+
+| Repository | Use it for |
+| --- | --- |
+| [axiom-api](https://github.com/wasely/axiom-api) | Recent Solana wallet transaction signatures |
+| [fomo-api](https://github.com/wasely/fomo-api) | Native SOL balance snapshots for a watchlist |
+| [solana-api](https://github.com/wasely/solana-api) | RPC health, balances, and token supply |
+
+Each project is an independent, read-only tool. Axiom and Fomo accounts are not connected.
 
 ## References
 
